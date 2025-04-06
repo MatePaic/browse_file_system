@@ -16,8 +16,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Path = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     ParentFolderId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -60,6 +60,12 @@ namespace Infrastructure.Migrations
                 name: "IX_Folders_ParentFolderId",
                 table: "Folders",
                 column: "ParentFolderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Folders_Path",
+                table: "Folders",
+                column: "Path",
+                unique: true);
         }
 
         /// <inheritdoc />

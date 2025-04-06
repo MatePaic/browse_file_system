@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 using System.Xml;
 
@@ -11,18 +12,9 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Folder>().HasKey(f => f.Id); // This is crucial
-            modelBuilder.Entity<Folder>()
-                .HasOne(f => f.ParentFolder)
-                .WithMany(f => f.Subfolders)
-                .HasForeignKey(f => f.ParentFolderId)
-                .OnDelete(DeleteBehavior.Restrict);
-            //modelBuilder.Entity<Folder>()
-            //    .HasIndex(f => f.Path);
-            //modelBuilder.Entity<Folder>()
-            //    .HasIndex(e => e.Name)
-            //    .IsUnique();
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(FoldersConfiguration).Assembly);
 
             modelBuilder.Entity<FileItem>().HasKey(f => f.Id); // This is crucial
             modelBuilder.Entity<FileItem>()
