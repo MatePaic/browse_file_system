@@ -8,5 +8,6 @@ namespace API.Services
         Task<GetFileDto> GetFileByIdAsync(int id);
         Task<ReturnFileDto> CreateFileAsync(FileCreateDto fileDto);
         Task<bool> DeleteFileAsync(int id);
+        Task<IReadOnlyList<GetFileDto>> SearchStartsWithAsync(string startsWith, int? folderId);
     }
 }

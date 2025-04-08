@@ -41,5 +41,22 @@ namespace Infrastructure.Data
                 .Where(f => f.FolderId == folderId)
                 .ToListAsync();
         }
+
+        public async Task<IReadOnlyList<FileItem>> SearchStartsWithAsync(string startsWith, int? folderId)
+        {
+            var query = _context.Files.AsQueryable();
+
+            if (folderId.HasValue)
+            {
+                query = query.Where(f => f.FolderId == folderId.Value);
+            }
+
+            return await query
+                .Where(f => f.Name.StartsWith(startsWith))
+                .Include(f => f.Folder)
+                .OrderBy(f => f.Name)
+                .Take(10)
+                .ToListAsync();
+        }
     }
 }

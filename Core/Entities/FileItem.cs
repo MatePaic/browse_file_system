@@ -5,7 +5,7 @@
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
         
-        // Relationship
+        // Navigation Property
         public int FolderId { get; set; }
         public Folder Folder { get; set; }
     }

@@ -1,7 +1,6 @@
 ﻿using Core.Entities;
 using Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
-using System.Xml;
 
 namespace Infrastructure.Data
 {
@@ -15,13 +14,6 @@ namespace Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(FoldersConfiguration).Assembly);
-
-            modelBuilder.Entity<FileItem>().HasKey(f => f.Id); // This is crucial
-            modelBuilder.Entity<FileItem>()
-                .HasOne(f => f.Folder)
-                .WithMany(f => f.Files)
-                .HasForeignKey(f => f.FolderId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

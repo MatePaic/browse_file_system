@@ -5,8 +5,11 @@
         public string Name { get; set; }
         public string Path { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        // Navigation Property
         public int? ParentFolderId { get; set; }
         public Folder ParentFolder { get; set; }
+        
         public List<Folder> Subfolders { get; set; } = [];
         public List<FileItem> Files { get; set; } = [];
     }

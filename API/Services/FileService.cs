@@ -53,6 +53,14 @@ namespace API.Services
             return true;
         }
 
+        public async Task<IReadOnlyList<GetFileDto>> SearchStartsWithAsync(string startsWith, int? folderId)
+        {
+            var files = await _fileRepository.SearchStartsWithAsync(startsWith, folderId);
+            
+            return files.Select(MapToGetFileDto).ToList();
+        }
+
+
         private static GetFileDto MapToGetFileDto(FileItem file)
         {
             return new GetFileDto
@@ -60,7 +68,7 @@ namespace API.Services
                 Id = file.Id,
                 Name = file.Name,
                 FolderId = file.FolderId,
-                FolderName = file.Folder?.Name ?? "Uncategorized",
+                FolderName = file.Folder?.Name,
                 CreatedDate = file.CreatedDate
             };
         }

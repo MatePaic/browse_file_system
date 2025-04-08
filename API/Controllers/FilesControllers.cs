@@ -46,5 +46,20 @@ namespace API.Controllers
 
             return result ? NoContent() : NotFound();
         }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IReadOnlyList<GetFileDto>>> SearchFile(
+            string startsWith,
+            int? folderId)
+        {
+            if (string.IsNullOrWhiteSpace(startsWith))
+            {
+                return BadRequest("Search term cannot be empty");
+            }
+
+            var results = await _fileService.SearchStartsWithAsync(startsWith, folderId);
+            
+            return Ok(results);
+        }
     }
 }

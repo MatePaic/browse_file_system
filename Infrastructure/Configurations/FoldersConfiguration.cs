@@ -12,7 +12,7 @@ namespace Infrastructure.Configurations
             builder.HasOne(f => f.ParentFolder)
                 .WithMany(f => f.Subfolders)
                 .HasForeignKey(f => f.ParentFolderId)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(f => f.Files)
                 .WithOne(f => f.Folder)
