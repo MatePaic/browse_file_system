@@ -4,34 +4,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class FolderRepository(StoreContext context) : IFolderRepository
+    public class FolderRepository(StoreContext _context) : IFolderRepository
     {
         public async Task<Folder> GetByIdAsync(int id)
         {
-            return await context.Folders
+            return await _context.Folders
                 .Include(f => f.ParentFolder)
                 .FirstOrDefaultAsync(f => f.Id == id);
         }
 
-        public async Task<IReadOnlyList<Folder>> GetFoldersAsync()
+        public async Task<List<Folder>> GetFoldersAsync()
         {
-            return await context.Folders.ToListAsync();
+            return await _context.Folders.Include(x => x.Files).ToListAsync();
         }
 
         public async Task<Folder> AddAsync(Folder folder)
         {
-            context.Folders.Add(folder);
+            _context.Folders.Add(folder);
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return folder;
         }
 
         public async Task DeleteAsync(Folder folder)
         {
-            context.Folders.Remove(folder);
+            _context.Folders.Remove(folder);
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

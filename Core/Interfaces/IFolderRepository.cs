@@ -5,7 +5,7 @@ namespace Core.Interfaces
     public interface IFolderRepository
     {
         Task<Folder> GetByIdAsync(int id);
-        Task<IReadOnlyList<Folder>> GetFoldersAsync();
+        Task<List<Folder>> GetFoldersAsync();
         Task<Folder> AddAsync(Folder folder);
         Task DeleteAsync(Folder folder);
     }

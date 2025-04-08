@@ -1,6 +1,7 @@
 services:
   sql:
-    image: mcr.microsoft.com/azure-sql-edge
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    platform: linux/amd64  # Required for Apple Silicon (M1/M2)
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: "Password@1"

@@ -19,6 +19,7 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<GetFolderDto>>> GetFolders()
         {
             var folders = await _folderService.GetAllFoldersAsync();
+
             return Ok(folders);
         }
 
@@ -47,8 +48,9 @@ namespace API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteFolder(int id)
         {
-            await _folderService.DeleteFolderAsync(id);
-            return NoContent();
+            var result = await _folderService.DeleteFolderAsync(id);
+            
+            return result ? NoContent() : NotFound();
         }
     }
 }

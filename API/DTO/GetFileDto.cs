@@ -1,12 +1,13 @@
-﻿ namespace Core.Entities
+﻿namespace API.DTO
 {
-    public class FileItem : BaseEntity
+    public class GetFileDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
         
         // Relationship
         public int FolderId { get; set; }
-        public Folder Folder { get; set; }
+        public string FolderName { get; set; }
     }
 }

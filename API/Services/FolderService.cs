@@ -4,18 +4,16 @@ using Core.Interfaces;
 
 namespace API.Services
 {
-    public class FolderService : IFolderService
+    public class FolderService(IFolderRepository _folderRepository) : IFolderService
     {
-        private readonly IFolderRepository _folderRepository;
-
-        public FolderService(IFolderRepository folderRepository)
-        {
-            _folderRepository = folderRepository;
-        }
-
         public async Task<ReturnFolderDto> CreateFolderAsync(FolderCreateDto folderDto)
         {
-            var folder = new Folder { Name = folderDto.Name, ParentFolderId = folderDto.ParentFolderId };
+            var folder = new Folder 
+            { 
+                Name = folderDto.Name, 
+                ParentFolderId = folderDto.ParentFolderId,
+                CreatedDate = DateTime.Now,
+            };
             var returnFolderDto = new ReturnFolderDto();
             var allFolders = await _folderRepository.GetFoldersAsync();
 
@@ -48,18 +46,22 @@ namespace API.Services
             returnFolderDto.Path = folder.Path;
 
             await _folderRepository.AddAsync(folder);
+            
             return returnFolderDto;
         }
 
-        public async Task DeleteFolderAsync(int id)
+        public async Task<bool> DeleteFolderAsync(int id)
         {
             var allFolders = await _folderRepository.GetFoldersAsync();
             var folderToDelete = allFolders.FirstOrDefault(f => f.Id == id);
 
-            if (folderToDelete == null) return;
+            if (folderToDelete == null) return false;
 
             await DeleteSubfoldersRecursive(folderToDelete, allFolders);
+
             await _folderRepository.DeleteAsync(folderToDelete);
+
+            return true;
         }
 
         public async Task<IReadOnlyList<GetFolderDto>> GetAllFoldersAsync()
@@ -73,6 +75,7 @@ namespace API.Services
         public async Task<GetFolderDto> GetFolderByIdAsync(int id)
         {
             var allFolders = await _folderRepository.GetFoldersAsync();
+
             var folder = allFolders.FirstOrDefault(f => f.Id == id);
 
             if (folder == null) return null;
@@ -87,6 +90,7 @@ namespace API.Services
             foreach (var subfolder in subfolders)
             {
                 await DeleteSubfoldersRecursive(subfolder, allFolders);
+                
                 await _folderRepository.DeleteAsync(subfolder);
             }
         }
@@ -99,6 +103,13 @@ namespace API.Services
                 Name = folder.Name,
                 Path = folder.Path,
                 ParentFolder = folder.ParentFolder?.Name,
+                CreatedDate = folder.CreatedDate,
+                Files = folder.Files.Select(file => new GetFileWithFolderDto
+                {
+                    Id = file.Id,
+                    Name = file.Name,
+                    CreatedDate = file.CreatedDate
+                }).ToList(),
                 Subfolders = allFolders
                     .Where(f => f.ParentFolderId == folder.Id)
                     .Select(f => MapToDto(f, allFolders))
