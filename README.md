@@ -34,6 +34,7 @@ Welcome to a large-scale browser-based file system, functionally similar to Drop
 2. Restore dependencies:
    ```bash
    dotnet restore
+   dotnet build
 3. Update the database connection string in appsettings.json
 4. Run database derver:
     ```bash
