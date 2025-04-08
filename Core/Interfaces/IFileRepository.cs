@@ -10,5 +10,6 @@ namespace Infrastructure.Data
         Task DeleteFileAsync(FileItem file);
         Task<IReadOnlyList<FileItem>> GetFilesByFolderAsync(int folderId);
         Task<IReadOnlyList<FileItem>> SearchStartsWithAsync(string startsWith, int? folderId);
+        Task<IReadOnlyList<FileItem>> SearchExactNameAsync(string name, int? folderId);
     }
 }

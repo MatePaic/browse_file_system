@@ -58,5 +58,20 @@ namespace Infrastructure.Data
                 .Take(10)
                 .ToListAsync();
         }
+
+        public async Task<IReadOnlyList<FileItem>> SearchExactNameAsync(string name, int? folderId)
+        {
+            var query = _context.Files.AsQueryable();
+
+            if (folderId.HasValue)
+            {
+                query = query.Where(f => f.FolderId == folderId.Value);
+            }
+
+            return await query
+                .Where(f => f.Name == name)
+                .Include(f => f.Folder)
+                .ToListAsync();
+        }
     }
 }

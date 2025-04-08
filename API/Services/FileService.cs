@@ -105,5 +105,12 @@ namespace API.Services
 
             return maxCounter == 0 ? baseName : $"{baseName}{maxCounter + 1}";
         }
+
+        public async Task<IReadOnlyList<GetFileDto>> SearchExactNameAsync(string name, int? folderId)
+        {
+            var files = await _fileRepository.SearchExactNameAsync(name, folderId);
+            
+            return files.Select(MapToGetFileDto).ToList();
+        }
     }
 }

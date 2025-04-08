@@ -61,5 +61,20 @@ namespace API.Controllers
             
             return Ok(results);
         }
+
+        [HttpGet("search/exact")]
+        public async Task<ActionResult<IReadOnlyList<GetFileDto>>> SearchExact(
+            [FromQuery] string name,
+            [FromQuery] int? folderId)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return BadRequest("Search term cannot be empty");
+            }
+
+            var results = await _fileService.SearchExactNameAsync(name, folderId);
+            
+            return Ok(results);
+        }
     }
 }
