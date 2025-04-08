@@ -37,7 +37,8 @@ Welcome to a large-scale browser-based file system, functionally similar to Drop
    dotnet restore
    dotnet build
 3. Update the database connection string in appsettings.json
-4. Start the app server and database server:
+4. Check in docker-compose.yml file for a platform. If you are using MacOS plafrom linux/amd64. On Windows just delete that line.
+5. Start the app server and database server:
    ```bash
    docker compose up -d -> database
    cd ../API
@@ -46,7 +47,7 @@ Welcome to a large-scale browser-based file system, functionally similar to Drop
    or all with docker 
    docker compose build browse-svc
    docker compose up -d
-5. Create database:
+6. Create database:
    ```bash
    dotnet ef database update -s API -p Infrastructure
-6. Attach postman json collection to postmand
+7. Attach postman json collection to postmand
