@@ -50,4 +50,7 @@ Welcome to a large-scale browser-based file system, functionally similar to Drop
 6. Create database:
    ```bash
    dotnet ef database update -s API -p Infrastructure
-7. Attach postman json collection to postmand
+7. Attach postman json collection to Postman
+8. Shut down database:
+    ```bash
+   docker compose down
