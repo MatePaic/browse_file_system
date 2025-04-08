@@ -46,4 +46,7 @@ Welcome to a large-scale browser-based file system, functionally similar to Drop
    or all with docker 
    docker compose build browse-svc
    docker compose up -d
-5. Attach postman json collection to postman
+5. Create database:
+   ```bash
+   dotnet ef database update -s API -p Infrastructure
+6. Attach postman json collection to postmand
