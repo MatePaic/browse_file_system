@@ -1,7 +1,9 @@
+version: '3.8'
+
 services:
   sql:
     image: mcr.microsoft.com/mssql/server:2019-latest
-    platform: linux/amd64  # Required for Apple Silicon (M1/M2)
+    platform: linux/amd64
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: "Password@1"
@@ -9,5 +11,23 @@ services:
       - "1433:1433"
     volumes:
       - sql-data:/var/opt/mssql
+
+  browse-svc:
+    image: browse-svc:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=YourSecurePassword
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ConnectionStrings__DefaultConnection=Server=sql,1433;Database=Browse;User Id=SA;Password=Password@1;Encrypt=False;TrustServerCertificate=True;
+    ports:
+      - "5001:80"
+      - "5002:443"
+    depends_on:
+      - sql
+
 volumes:
   sql-data:

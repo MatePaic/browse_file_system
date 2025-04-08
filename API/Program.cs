@@ -4,9 +4,14 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.ConfigureKestrel(options => {
+    options.ListenAnyIP(80);
+    options.ListenAnyIP(443, listenOptions => {
+        listenOptions.UseHttps("/https/aspnetapp.pfx", "YourSecurePassword");
+    });
+});
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
