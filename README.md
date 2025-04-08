@@ -31,6 +31,7 @@ Welcome to a large-scale browser-based file system, functionally similar to Drop
 1. Clone the repository:
    ```bash
    git clone https://github.com/MatePaic/browse_file_system.git
+   cd browse_file_system/
 2. Restore dependencies:
    ```bash
    dotnet restore
