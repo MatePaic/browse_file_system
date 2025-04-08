@@ -36,14 +36,12 @@ Welcome to a large-scale browser-based file system, functionally similar to Drop
    dotnet restore
    dotnet build
 3. Update the database connection string in appsettings.json
-4. Run database derver:
-    ```bash
-   docker compose up -d
-6. Start the server:
+4. Start the app server and database server:
    ```bash
+   docker compose up -d -> database
    cd ../API
    dotnet run
 
-   or with docker
+   or all with docker 
    docker compose build browse-svc
    docker compose up -d
