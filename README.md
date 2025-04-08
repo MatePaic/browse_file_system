@@ -7,9 +7,9 @@ Welcome to a large-scale browser-based file system, functionally similar to Drop
 ## Features
 
 ### Backend (ASP.NET WebAPI)
-- **Create folders and subfolders**: Implemented creating folders and subfolders in one endpoint(based on parentFolderId -> if null it is rootfolder if not it is subfolder)
+- **Create folders and subfolders**: Implemented creating folders and subfolders in one endpoint(based on parentFolderId -> if parentFolderId is null that means folder is root folder but if parentFolder is some id then folder is subfolder)
 - **Create new files in the folders**: Implemented creating files with parentfolder Id.
-- **Search files by its exact name within a parent folder and across all files**
+- **Search files by its exact name within a parent folder and across all files**: User can search files in some specific folder and can search without specifing a folder.
 - **Delete folders and files**: Deletes folder and files by Id. If you delete folder with files and subfolders, everything inside that folder is deleted.
 
 ---
